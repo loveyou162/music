@@ -1,0 +1,11 @@
+.midMain {
+  /* border-right: 1px solid #ccc; */
+  position: relative;
+}
+
+.youtubeVideo {
+  display: flex;
+  justify-content: center;
+  margin-top: 84px;
+  border-radius: 20px;
+}

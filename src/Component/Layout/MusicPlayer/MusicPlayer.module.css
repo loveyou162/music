@@ -1,0 +1,88 @@
+.musicDetail {
+  background-color: #0d0022fb;
+  grid-column: 1/4;
+  z-index: 999;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 16px 0;
+  border-top: 1px solid #cccccc6e;
+  display: grid;
+  grid-template-columns: 30% 40% 30%;
+}
+.info-music {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  margin-left: 24px;
+}
+.img-music {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.name-music {
+  text-transform: capitalize;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.artist {
+  color: #ccc;
+}
+
+.music-player {
+}
+
+.music-player-control {
+  display: grid;
+  justify-items: center;
+}
+.music-player-box {
+  width: 50%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: center;
+  align-items: center;
+  padding: 20px;
+}
+.music-player-box i:nth-child(3) {
+  font-size: 2rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background-color: #ccc;
+  position: relative;
+}
+
+.progress {
+  height: 6px;
+  background-color: #460263;
+  transition: width 0.1s ease-in-out;
+}
+
+.volume-group {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.volume-group ion-icon {
+  font-size: 1.5rem;
+}
+
+.volume-group input {
+  width: 30%;
+}
+
+.speaker-volume {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

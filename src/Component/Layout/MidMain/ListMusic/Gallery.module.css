@@ -1,0 +1,29 @@
+/* CSS tùy chỉnh */
+.custom-slider {
+  /* Quy tắc CSS tùy chỉnh cho slider */
+  width: 60%;
+  position: relative;
+  top: 100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 16px;
+}
+
+.custom-prev,
+.custom-next {
+  /* Quy tắc CSS tùy chỉnh cho nút trượt trước và sau */
+  /* display: none; */
+}
+
+.custom-dots {
+  /* Quy tắc CSS tùy chỉnh cho thanh chấm tròn (dots) */
+  color: red;
+}
+.gallery-item > img {
+  width: 90%;
+  border-radius: 10px;
+  margin: 0 auto;
+}
+
+.gallery-item {
+}

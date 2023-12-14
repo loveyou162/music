@@ -1,0 +1,66 @@
+{
+  "MODULE": [
+    {
+      "module1": [
+        {
+          "id": 1,
+          "name": "home-outline",
+          "title": "Trang Chủ",
+          "link": "/"
+        },
+        {
+          "id": 2,
+          "name": "planet-outline",
+          "title": "Khám Phá",
+          "link": "/discovery"
+        },
+        {
+          "id": 3,
+          "name": "stats-chart-outline",
+          "title": "Top",
+          "link": "top"
+        },
+        {
+          "id": 4,
+          "name": "cube-outline",
+          "title": "Album",
+          "link": "album"
+        },
+        {
+          "id": 5,
+          "name": "person-outline",
+          "title": "Cá Nhân",
+          "link": "/"
+        }
+      ]
+    },
+    {
+      "module2": [
+        {
+          "id": 6,
+          "name": "musical-notes-outline",
+          "title": "Nhạc Mới",
+          "link": "/"
+        },
+        {
+          "id": 7,
+          "name": "apps-outline",
+          "title": "Thể Loại",
+          "link": "/"
+        },
+        {
+          "id": 8,
+          "name": "play-circle-outline",
+          "title": "MV",
+          "link": "/"
+        },
+        {
+          "id": 9,
+          "name": "headset-outline",
+          "title": "Nghe Nhiều",
+          "link": "/"
+        }
+      ]
+    }
+  ]
+}

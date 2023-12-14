@@ -1,0 +1,24 @@
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0; /* Đặt left thành 0 để căn giữa theo chiều ngang */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  align-items: center; /* Căn giữa theo chiều dọc */
+}
+.backdrop {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: #1a1a1a7c;
+  z-index: 1;
+}
+.album-content {
+  width: 60%; /* Giảm chiều rộng để tạo khoảng trống xung quanh ảnh */
+  display: flex;
+  flex-direction: column; /* Chuyển sang kiểu flex dọc */
+  align-items: center; /* Căn giữa theo chiều ngang */
+  z-index: 2;
+}
