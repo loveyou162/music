@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Home from './Pages/Home/Home';
@@ -13,9 +13,8 @@ import Dashboard from './Component/Layout/Admin/Dashboard';
 import Category from './Component/Layout/Admin/Category';
 import User from './Component/Layout/Admin/User';
 import Song from './Component/Layout/Admin/Song';
-import Gallery, {
-  action as galleryAction,
-} from './Component/Layout/Admin/Gallerys';
+import Gallery from './Component/Layout/Admin/Gallerys';
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -37,7 +36,7 @@ function App() {
             { path: 'user', element: <User /> },
             { path: 'category', element: <Category /> },
             { path: 'song', element: <Song /> },
-            { path: 'gallery', element: <Gallery />, action: galleryAction },
+            { path: 'gallery', element: <Gallery /> },
           ],
         },
       ],

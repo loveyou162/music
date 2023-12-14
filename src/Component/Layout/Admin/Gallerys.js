@@ -6,65 +6,95 @@ import {
   useActionData,
   useRouteLoaderData,
 } from 'react-router-dom';
-
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { storage } from '../../../firebase';
+import { v4 as uuidv4 } from 'uuid';
+// import { getDatabase, ref, child, get } from 'firebase/database';
+// import { database } from '../../../firebase';
 function Gallery() {
-  const data = useActionData();
+  // const dbRef = ref(database);
+  // get(child(dbRef, `gallery/poster`))
+  //   .then(snapshot => {
+  //     if (snapshot.exists()) {
+  //       console.log(snapshot.val());
+  //     } else {
+  //       console.log('No data available');
+  //     }
+  //   })
+  //   .catch(error => {
+  //     console.error(error);
+  //   });
+
+  // const data = useActionData();
   //lấy dữ liệu gallery từ loader của root
   const image = useRouteLoaderData('root');
   console.log(Object.entries(image.poster));
   const dataImage = Object.entries(image.poster);
-  // const imgitems = dataImage.map(file => {
-  //   // console.log('0', file[0]);
-  //   console.log('1', file[1]);
-  // });
-  // const [selectedFiles, setSelectedFiles] = useState([]);
-  // const [nameSong, setNameSong] = useState(null);
-  // // State để lưu giá trị được chọn
-  // const [selectedOption, setSelectedOption] = useState('');
-  // console.log(selectedOption);
-  // console.log(selectedFiles);
-  // const handleFileChange = event => {
-  //   const file = event.target.files[0];
-  //   console.log(file);
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       const newFile = {
-  //         id: Date.now(),
-  //         file,
-  //         dataURL: reader.result,
-  //         name: nameSong,
-  //       };
-  //       setSelectedFiles(prevFiles => [...prevFiles, newFile]);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
-  // const nameChangehandler = event => {
-  //   const enteredName = event.target.value;
-  //   console.log(enteredName);
-  //   setNameSong(enteredName);
-  // };
+  const [selectedFiles, setSelectedFiles] = useState(null);
+  const [nameSong, setNameSong] = useState(null);
+  // State để lưu giá trị được chọn
+  const [selectedOption, setSelectedOption] = useState('');
+  console.log(selectedOption);
+  console.log(38, selectedFiles);
+  const handleFileChange = event => {
+    const file = event.target.files[0];
+    console.log(file);
+    setSelectedFiles(file);
+    // if (file) {
+    //   const reader = new FileReader();
+    //   reader.onloadend = () => {
+    //     const newFile = {
+    //       id: Date.now(),
+    //       file,
+    //       dataURL: reader.result,
+    //       name: nameSong,
+    //     };
+    //     setSelectedFiles(prevFiles => [...prevFiles, newFile]);
+    //   };
+    //   reader.readAsDataURL(file);
+    // }
+  };
+  const nameChangehandler = event => {
+    const enteredName = event.target.value;
+    console.log(enteredName);
+    setNameSong(enteredName);
+  };
   //mảng dữ liệu tùy chọn
   const options = ['Banner', 'Poster'];
 
   // Xử lý sự kiện khi giá trị được chọn thay đổi
-  // const handleSelectChange = event => {
-  //   setSelectedOption(event.target.value);
-  // };
+  const handleSelectChange = event => {
+    setSelectedOption(event.target.value);
+  };
+
+  const uploadFile = () => {
+    const storageRef = ref(storage, uuidv4());
+    const upload = uploadBytesResumable(storageRef, selectedFiles);
+    upload.on(
+      'state_changed',
+      snapshot => {},
+      err => {},
+      () => {
+        getDownloadURL(upload.snapshot.ref).then(async downloadURL => {
+          console.log(downloadURL);
+        });
+      }
+    );
+  };
+
   return (
     <div className={classes.gallery}>
       <h1>Gallery</h1>
 
       {/* Hiển thị danh sách ảnh đã chọn */}
-      <Form method="post" className={classes.form}>
-        {data && data.errors && (
+      <form className={classes.form}>
+        {/* {data && data.errors && (
           <ul>
             {Object.values(data.errors).map(err => (
               <li key={err}>{err}</li>
             ))}
           </ul>
-        )}
+        )} */}
         {/* Input để chọn ảnh mới */}
         <div className={classes.groupInput}>
           <label htmlFor="name-image">Tên bài hát</label>
@@ -72,7 +102,7 @@ function Gallery() {
             type="text"
             id="name-image"
             name="name-image"
-            // onChange={nameChangehandler}
+            onChange={nameChangehandler}
             className={classes['form-control']}
           />
         </div>
@@ -85,7 +115,7 @@ function Gallery() {
             id="image"
             name="image"
             accept="image/*"
-            // onChange={handleFileChange}
+            onChange={handleFileChange}
             className={`custom-file-input ${classes.inputAvt}`}
           />
         </div>
@@ -97,7 +127,7 @@ function Gallery() {
             id="selectOption"
             name="selectOption"
             // value={selectedOption}
-            // onChange={handleSelectChange}
+            onChange={handleSelectChange}
           >
             {/* Tạo các tùy chọn từ mảng dữ liệu */}
             {options.map((option, index) => (
@@ -107,8 +137,8 @@ function Gallery() {
             ))}
           </select>
         </div>
-        <button type="submit">submit</button>
-      </Form>
+      </form>
+      <button onClick={uploadFile}>submit</button>
 
       <table className={classes.tableGallery}>
         <thead>
@@ -140,52 +170,52 @@ function Gallery() {
 
 export default memo(Gallery);
 
-export async function action({ params, request }) {
-  try {
-    const data = await request.formData();
-    console.log(data);
-    const baseImage = data.get('image');
-    console.log(baseImage);
-    let dataURL;
+// export async function action({ params, request }) {
+//   try {
+//     const data = await request.formData();
+//     console.log(data);
+//     const baseImage = data.get('image');
+//     console.log(baseImage);
+//     let dataURL;
 
-    if (baseImage) {
-      const imageBlob = new Blob([baseImage], { type: 'image/*' });
-      console.log(imageBlob);
-      const reader = new FileReader();
-      const onloadEndPromise = new Promise(resolve => {
-        reader.onloadend = resolve;
-      });
+//     if (baseImage) {
+//       const imageBlob = new Blob([baseImage], { type: 'image/*' });
+//       console.log(imageBlob);
+//       const reader = new FileReader();
+//       const onloadEndPromise = new Promise(resolve => {
+//         reader.onloadend = resolve;
+//       });
 
-      reader.readAsDataURL(imageBlob);
-      await onloadEndPromise;
-      dataURL = reader.result;
-      console.log(dataURL);
-    }
+//       reader.readAsDataURL(imageBlob);
+//       await onloadEndPromise;
+//       dataURL = reader.result;
+//       console.log(dataURL);
+//     }
 
-    console.log('baseImage: ', baseImage);
+//     console.log('baseImage: ', baseImage);
 
-    const imgData = {
-      name: data.get('name-image'),
-      image: dataURL,
-      option: data.get('selectOption'),
-    };
+//     const imgData = {
+//       name: data.get('name-image'),
+//       image: data.get('image'),
+//       option: data.get('selectOption'),
+//     };
 
-    const response = await fetch(
-      'https://music-bc1ba-default-rtdb.firebaseio.com/gallery/poster.json',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(imgData),
-      }
-    );
+//     const response = await fetch(
+//       'https://music-bc1ba-default-rtdb.firebaseio.com/gallery/poster.json',
+//       {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify(imgData),
+//       }
+//     );
 
-    if (!response.ok) {
-      throw json({ message: 'Something went wrong!' }, { status: 500 });
-    } else {
-      return response;
-    }
-  } catch (error) {
-    console.error('An error occurred:', error);
-    return new Response('Internal Server Error', { status: 500 });
-  }
-}
+//     if (!response.ok) {
+//       throw json({ message: 'Something went wrong!' }, { status: 500 });
+//     } else {
+//       return response;
+//     }
+//   } catch (error) {
+//     console.error('An error occurred:', error);
+//     return new Response('Internal Server Error', { status: 500 });
+//   }
+// }
